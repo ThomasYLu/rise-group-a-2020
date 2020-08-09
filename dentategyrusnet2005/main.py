@@ -30,11 +30,11 @@ if (result.stdout.decode('utf-8')[:3] == "scc"): # scc has an odd way of account
 if len(sys.argv)>(startlen):
     simname = sys.argv[startlen]
     if len(sys.argv)>(argadd+startlen):
-        caivar = int(sys.argv[argadd+startlen])
-        if len(sys.argv)>(2*argadd+startlen):
-            caovar = int(sys.argv[2*argadd+startlen])
+        caivar = float(sys.argv[argadd+startlen]) # must convert to float if scientific notation
+        if len(sys.argv)>(2*argadd+startlen): # if not scientific notation can convert to float or int
+            caovar = float(sys.argv[2*argadd+startlen])
             if len(sys.argv)>(3*argadd+startlen):
-                mytstop = float(sys.argv[3*argadd+startlen])
+                mytstop = int(sys.argv[3*argadd+startlen])
                         
                         
 rmchars=['"',"'","\\"," "]
@@ -68,12 +68,14 @@ h('printstyle = '+str(printstyle))
 # using the default_var function (see examples in hoc for caivar, caovar)
 
 # Note, the python variables caivar and caovar are not directly related to
-# h.caivar, h.caovar. You must explicitly set them equal if you want updates
+# h.caivar, h.caovar. You must explicitly set them equal if you want updates to
 # caivar and caovar to alter h.caivar and h.caovar
 
 #%% This code creates a unique results directory for each run of your code
 h.RunName = simname
 
+if (not os.path.exists("results")):
+    os.mkdir("results")
 # check if dir exists
 # update RunName if necessary
 while (os.path.exists("results/"+h.RunName)):

@@ -2,7 +2,7 @@
 
 #$ -P riseprac
 
-#$ -pe omp 8
+#$ -pe omp 1
 
 #$ -l h_rt=1:00:00
 
@@ -24,4 +24,4 @@ module load python3/3.6.5
 module load openmpi
 module load neuron/7.6.7
 
-mpirun -np 8 ./x86_64/special -mpi -c '"sim1"' -c "2e-3" main.py
+mpirun -np 1 ./x86_64/special -mpi -c '"sim1"' -c "2e-3" main.py
