@@ -1,0 +1,44 @@
+Precell 	pstcell 	 Synapse 
+GranuleCell[0]	BasketCell[0]	Exp2Syn[47]
+GranuleCell[0]	MossyCell[0]	Exp2Syn[73]
+GranuleCell[0]	HIPPCell[0]	Exp2Syn[103]
+GranuleCell[0]	GranuleCell[0]	Exp2Syn[7]
+GranuleCell[1]	BasketCell[0]	Exp2Syn[47]
+GranuleCell[1]	MossyCell[0]	Exp2Syn[74]
+GranuleCell[1]	HIPPCell[0]	Exp2Syn[103]
+GranuleCell[1]	GranuleCell[0]	Exp2Syn[8]
+GranuleCell[2]	BasketCell[0]	Exp2Syn[48]
+GranuleCell[2]	MossyCell[0]	Exp2Syn[73]
+GranuleCell[2]	HIPPCell[0]	Exp2Syn[103]
+GranuleCell[2]	GranuleCell[0]	Exp2Syn[7]
+GranuleCell[3]	BasketCell[0]	Exp2Syn[48]
+GranuleCell[3]	MossyCell[0]	Exp2Syn[73]
+GranuleCell[3]	HIPPCell[0]	Exp2Syn[104]
+GranuleCell[3]	GranuleCell[0]	Exp2Syn[7]
+GranuleCell[4]	BasketCell[0]	Exp2Syn[48]
+GranuleCell[4]	MossyCell[0]	Exp2Syn[74]
+GranuleCell[4]	HIPPCell[0]	Exp2Syn[104]
+GranuleCell[4]	GranuleCell[0]	Exp2Syn[8]
+MossyCell[0]	GranuleCell[0]	Exp2Syn[3]
+MossyCell[1]	GranuleCell[0]	Exp2Syn[3]
+MossyCell[1]	MossyCell[0]	Exp2Syn[77]
+MossyCell[1]	HIPPCell[0]	Exp2Syn[108]
+TO BC
+ GC 	BC 	MC 	HC 
+5	0	0	0 
+0	0	0	0 
+TO MC
+ GC 	BC 	MC 	HC 
+5	0	1	0
+0	0	0	0
+TO HC 
+ GC	 MC
+5	1
+0	0
+TO GC
+ BC	 MC	 HC	 GC
+0	2	0	5
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
