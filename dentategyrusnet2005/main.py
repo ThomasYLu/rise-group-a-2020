@@ -10,12 +10,39 @@ And can plot results
 @author: mbezaire
 """
 
+# Set default values here in case not passed in via command line
 caivar = 5.e-6 # Internal calcium concentration (mM)
 caovar = 2     # External calcium concentration (mM)
 
-plotstyle = 1 # 1: normal spikeraster, 2: interspersed spikeraster, 0: no plots
+plotstyle = 0 # 1: normal spikeraster, 2: interspersed spikeraster, 0: no plots
 printstyle = 1 # 2: print a lot of status lines / updates, 1: print some lines, 0: print minimal
-mytstop = 300	# 1500 ms, duration of simulation
+mytstop = 100	# 1500 ms, duration of simulation
+
+#%% Now check for command line args:
+argadd = 1
+startlen = 1
+import subprocess
+result = subprocess.run('hostname', stdout = subprocess.PIPE)
+if (result.stdout.decode('utf-8')[:3] == "scc"): # scc has an odd way of accounting for command line arguments
+    argadd = 2
+    startlen = 5
+    
+if len(sys.argv)>(startlen):
+    simname = sys.argv[startlen]
+    if len(sys.argv)>(argadd+startlen):
+        caivar = float(sys.argv[argadd+startlen]) # must convert to float if scientific notation
+        if len(sys.argv)>(2*argadd+startlen): # if not scientific notation can convert to float or int
+            caovar = float(sys.argv[2*argadd+startlen])
+            if len(sys.argv)>(3*argadd+startlen):
+                mytstop = int(sys.argv[3*argadd+startlen])
+                        
+                        
+rmchars=['"',"'","\\"," "]
+
+for i in rmchars:
+    simname = simname.replace(i,"")
+
+
 #%% Set up the NEURON environment
 from neuron import h
 import os
@@ -41,12 +68,14 @@ h('printstyle = '+str(printstyle))
 # using the default_var function (see examples in hoc for caivar, caovar)
 
 # Note, the python variables caivar and caovar are not directly related to
-# h.caivar, h.caovar. You must explicitly set them equal if you want updates
+# h.caivar, h.caovar. You must explicitly set them equal if you want updates to
 # caivar and caovar to alter h.caivar and h.caovar
 
 #%% This code creates a unique results directory for each run of your code
-h.RunName = "Test"
+h.RunName = simname
 
+if (not os.path.exists("results")):
+    os.mkdir("results")
 # check if dir exists
 # update RunName if necessary
 while (os.path.exists("results/"+h.RunName)):
