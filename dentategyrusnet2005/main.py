@@ -14,9 +14,9 @@ And can plot results
 caivar = 5.e-6 # Internal calcium concentration (mM)
 caovar = 2     # External calcium concentration (mM)
 
-plotstyle = 0 # 1: normal spikeraster, 2: interspersed spikeraster, 0: no plots
+plotstyle = 1 # 1: normal spikeraster, 2: interspersed spikeraster, 0: no plots
 printstyle = 1 # 2: print a lot of status lines / updates, 1: print some lines, 0: print minimal
-mytstop = 100	# 1500 ms, duration of simulation
+mytstop = 10	# 1500 ms, duration of simulation
 
 #%% Now check for command line args:
 argadd = 1
@@ -30,9 +30,9 @@ if (result.stdout.decode('utf-8')[:3] == "scc"): # scc has an odd way of account
 if len(sys.argv)>(startlen):
     simname = sys.argv[startlen]
     if len(sys.argv)>(argadd+startlen):
-        caivar = float(sys.argv[argadd+startlen]) # must convert to float if scientific notation
+        caovar = float(sys.argv[argadd+startlen]) # must convert to float if scientific notation
         if len(sys.argv)>(2*argadd+startlen): # if not scientific notation can convert to float or int
-            caovar = float(sys.argv[2*argadd+startlen])
+            caivar = caovar * 5.e-6 / 2 if sys.argv[2*argadd+startlen]=='-1' else float(sys.argv[2*argadd+startlen])
             if len(sys.argv)>(3*argadd+startlen):
                 mytstop = int(sys.argv[3*argadd+startlen])
                         
@@ -72,7 +72,7 @@ h('printstyle = '+str(printstyle))
 # caivar and caovar to alter h.caivar and h.caovar
 
 #%% This code creates a unique results directory for each run of your code
-h.RunName = simname
+h.RunName = simname+'_o{}'.format(int(caovar) if caovar % 1 == 0 else caovar) # simname and calcium concentration (external)
 
 if (not os.path.exists("results")):
     os.mkdir("results")
@@ -153,4 +153,5 @@ if (plotstyle>0):
     plt.title("{} with [Ca_i] = {} mM, [Ca_o] = {} mM".format(ROI, caivar, caovar))
     plt.xlabel("Time (ms)")
 
-    plt.show() # plt.savefig(filename="spikeraster_{}.png".format(ROI))
+    #plt.show()
+    plt.savefig(filename="./results/{}/spikeraster_{}.png".format(ROI,ROI))
