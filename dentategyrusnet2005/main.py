@@ -10,15 +10,23 @@ And can plot results
 @author: mbezaire
 """
 
+import sys
+
+print("Simulation start!")
+
 # Set default values here in case not passed in via command line
 caivar = 5.e-6 # Internal calcium concentration (mM)
 caovar = 2     # External calcium concentration (mM)
 
-plotstyle = 0 # 1: normal spikeraster, 2: interspersed spikeraster, 0: no plots
+plotstyle = 1 # 1: normal spikeraster, 2: interspersed spikeraster, 0: no plots
 printstyle = 1 # 2: print a lot of status lines / updates, 1: print some lines, 0: print minimal
-mytstop = 100	# 1500 ms, duration of simulation
+mytstop = 50	# 1500 ms, duration of simulation
 
+simname = "sim0"
 #%% Now check for command line args:
+
+print("Checking cmd args!")
+
 argadd = 1
 startlen = 1
 import subprocess
@@ -26,6 +34,7 @@ result = subprocess.run('hostname', stdout = subprocess.PIPE)
 if (result.stdout.decode('utf-8')[:3] == "scc"): # scc has an odd way of accounting for command line arguments
     argadd = 2
     startlen = 5
+    plotsyle = 0
     
 if len(sys.argv)>(startlen):
     simname = sys.argv[startlen]
@@ -44,6 +53,8 @@ for i in rmchars:
 
 
 #%% Set up the NEURON environment
+print("Setting up NEURON!")
+
 from neuron import h
 import os
 
@@ -72,6 +83,8 @@ h('printstyle = '+str(printstyle))
 # caivar and caovar to alter h.caivar and h.caovar
 
 #%% This code creates a unique results directory for each run of your code
+print("Creating new results directory.")
+
 h.RunName = simname
 
 if (not os.path.exists("results")):
@@ -89,68 +102,14 @@ while (os.path.exists("results/"+h.RunName)):
 #%%        
 os.mkdir("results/"+h.RunName)
 
+print("Loading hoc file now.")
 h.load_file(1,"A-DG500_M7.hoc")
 
 print("This simulation is called: " + h.RunName)
 
 ROI = h.RunName
 #%%
-import csv 
-
-cell_ranges = {}
-with open('results/'+ROI+'/celltype.dat') as f:
-    cell_reader = csv.DictReader(f,delimiter="\t")
-    for cell in cell_reader:
-        cell_ranges[cell["celltype"]] = [int(cell["rangeStart"]),int(cell["rangeEnd"])+1]
-
-
-#%%
-        
+      
 if (plotstyle>0):
-    import numpy as np
-    import matplotlib.pyplot as plt
-    
-    
-    detaildata = np.loadtxt('results/'+ROI+'/currents_potentials.dat',skiprows=1)
-    # plt.figure()
-    # plt.plot(detaildata[:,0],detaildata[:,1])
-    # plt.xlabel('Time (ms')
-    # plt.ylabel('Membrane Potential for Gcell[0]')
-    # plt.show()
-
-    # detaildata[:,2] # somatic calcium concentration
-    # detaildata[:,3] # somatic sodium channel current
-    
-    
-    plt.figure()
-    
-    mydata = np.loadtxt('results/'+ROI+'/spikeraster.dat')
-    
-    if (plotstyle==1):
-        plt.scatter(mydata[:,0],mydata[:,1],s=.01)
-        plt.ylabel("Cell #")
-    
-    else:
-        # Plotting interspersed cells in different colors by cell type:
-        pt_colors=[np.array([1,1,0]),np.array([.2,.2,.2]),np.array([1,0,0]),np.array([0,1,0]),np.array([0,0,1])]
-        #pt_colors=[np.array([1,1,0]),np.array([.2,0,.4]),np.array([1,.5,0]),np.array([.2,1,.9]),np.array([.8,.5,.8])]
-        pt_c=0
-        for key in cell_ranges:
-            tmpdata = mydata[(mydata[:,1]>=cell_ranges[key][0]) & (mydata[:,1]<cell_ranges[key][1])]
-            plotpos = (tmpdata[:,1] - cell_ranges[key][0])/(cell_ranges[key][1]-cell_ranges[key][0])*1000
-            if (len(plotpos)==1 and plotpos[0]==0):
-                plt.scatter(tmpdata[:,0],plotpos,s=20,c=pt_colors[pt_c].reshape(1,-1),label=key)
-            elif (len(plotpos)/len(mydata)<.5):
-                plt.scatter(tmpdata[:,0],plotpos,s=4,c=pt_colors[pt_c].reshape(1,-1),label=key)
-            else:
-                plt.scatter(tmpdata[:,0],plotpos,s=.05,c=pt_colors[pt_c].reshape(1,-1),label=key)
-            pt_c += 1
-            
-        plt.ylabel("Cells (positioned)")
-        plt.legend(loc="upper left",fontsize=8)
-        
-    #plt.xlim([200, 300])
-    plt.title("{} with [Ca_i] = {} mM, [Ca_o] = {} mM".format(ROI, caivar, caovar))
-    plt.xlabel("Time (ms)")
-
-    plt.show() # plt.savefig(filename="spikeraster_{}.png".format(ROI))
+    import plots
+    plots.plotPostSim(ROI, plotstyle)
