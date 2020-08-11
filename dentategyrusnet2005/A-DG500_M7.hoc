@@ -1523,8 +1523,8 @@ proc SpkMx() { local i, j
 
 	dfile.wopen(fname) // "DGSp.txt"
 
-	while(k <  VmT.size) {
-	for j = 0, cells.count-2 {
+	while(k <  VmT.size) { // for all t
+	for j = 0, cells.count-2 { // for all cells
 	if(Spike[j].x[k] != 0) {
 	dfile.printf("%f\t%d\n", VmT.x[k], j)}
 	}
@@ -1657,49 +1657,49 @@ objectvar ocbox_, ocbox_list_, scene_, scene_list_
 {ocbox_list_ = new List()  scene_list_ = new List()}
 
 if (nrnplot==1) {
-xpanel("RunControl", 0)
-v_init = -60
-xvalue("Init","v_init", 1,"stdinit()", 1, 1 )
-xbutton("Init & Run","run()")
-xbutton("Stop","stoprun=1")
-runStopAt = 5
-xvalue("Continue til","runStopAt", 1,"{continuerun(runStopAt) stoprun=1}", 1, 1 )
-runStopIn = 1
-xvalue("Continue for","runStopIn", 1,"{continuerun(t + runStopIn) stoprun=1}", 1, 1 )
-xbutton("Single Step","steprun()")
-t = 0
-xvalue("t","t", 2 )
-tstop = 300	//1500
-xvalue("Tstop","tstop", 1,"tstop_changed()", 0, 1 )
-dt = 0.1
-xvalue("dt","dt", 1,"setdt()", 0, 1 )
-steps_per_ms = 10	//40
-xvalue("Points plotted/ms","steps_per_ms", 1,"setdt()", 0, 1 )
-xpanel(544,121)
-
-//plot membrane voltage traces
-
-save_window_ = new Graph(0)
-save_window_.size(0,tstop,-80,40)
-scene_vector_[2] = save_window_
-{save_window_.view(0, -80, tstop, 120, 290, 470, 579.84, 208)}
-graphList[0].append(save_window_)
-save_window_.save_name("graphList[0].")
-save_window_.addexpr("Gcell[0].soma.v(0.5)",1,1)
-save_window_.addexpr("Bcell[0].soma.v(0.5)",2,1)
-save_window_.addexpr("Bcell[1].soma.v(0.5)",5,1)
-save_window_.addexpr("Mcell[0].soma.v(0.5)",3,1)
-save_window_.addexpr("Hcell[0].soma.v(0.5)",4,1)
+    xpanel("RunControl", 0)
+    v_init = -60
+    xvalue("Init","v_init", 1,"stdinit()", 1, 1 )
+    xbutton("Init & Run","run()")
+    xbutton("Stop","stoprun=1")
+    runStopAt = 5
+    xvalue("Continue til","runStopAt", 1,"{continuerun(runStopAt) stoprun=1}", 1, 1 )
+    runStopIn = 1
+    xvalue("Continue for","runStopIn", 1,"{continuerun(t + runStopIn) stoprun=1}", 1, 1 )
+    xbutton("Single Step","steprun()")
+    t = 0
+    xvalue("t","t", 2 )
+    tstop = 300	//1500
+    xvalue("Tstop","tstop", 1,"tstop_changed()", 0, 1 )
+    dt = 0.1
+    xvalue("dt","dt", 1,"setdt()", 0, 1 )
+    steps_per_ms = 10	//40
+    xvalue("Points plotted/ms","steps_per_ms", 1,"setdt()", 0, 1 )
+    xpanel(544,121)
+    
+    //plot membrane voltage traces
+    
+    save_window_ = new Graph(0)
+    save_window_.size(0,tstop,-80,40)
+    scene_vector_[2] = save_window_
+    {save_window_.view(0, -80, tstop, 120, 290, 470, 579.84, 208)}
+    graphList[0].append(save_window_)
+    save_window_.save_name("graphList[0].")
+    save_window_.addexpr("Gcell[0].soma.v(0.5)",1,1)
+    save_window_.addexpr("Bcell[0].soma.v(0.5)",2,1)
+    save_window_.addexpr("Bcell[1].soma.v(0.5)",5,1)
+    save_window_.addexpr("Mcell[0].soma.v(0.5)",3,1)
+    save_window_.addexpr("Hcell[0].soma.v(0.5)",4,1)
 }
 
 
 proc rrun(){
-initNet()
-saveNet()
-print "About to run simulation ", RunName, " for duration ", tstop, " ms"
-run()
-print "Going to write results"
-SpkMx()
+    initNet()
+    saveNet()
+    print "About to run simulation ", RunName, " for duration ", tstop, " ms"
+    run()
+    print "Going to write results"
+    SpkMx()
 }
 
 rrun()
