@@ -43,14 +43,14 @@ def plots(ROI, caovar, plotstyle=1): # originally took caivar--redundant now due
                 cell_ranges[cell["celltype"]] = [int(cell["rangeStart"]),int(cell["rangeEnd"])+1]
         
         # Plotting interspersed cells in different colors by cell type:
-        pt_colors=[np.array([1,1,0]),np.array([.2,.2,.2]),np.array([1,0,0]),np.array([0,1,0]),np.array([0,0,1])]
+        pt_colors=[np.array([0,.2,.2]),np.array([1,0,1]),np.array([1,0,0]),np.array([0,1,0]),np.array([0,0,1])]
         #pt_colors=[np.array([1,1,0]),np.array([.2,0,.4]),np.array([1,.5,0]),np.array([.2,1,.9]),np.array([.8,.5,.8])]
         pt_c=0
         for key in cell_ranges:
             tmpdata = mydata[(mydata[:,1]>=cell_ranges[key][0]) & (mydata[:,1]<cell_ranges[key][1])]
             plotpos = (tmpdata[:,1] - cell_ranges[key][0])/(cell_ranges[key][1]-cell_ranges[key][0])*1000
             if (len(plotpos)==1 and plotpos[0]==0):
-                plt.scatter(tmpdata[:,0],plotpos,s=20,c=pt_colors[pt_c].reshape(1,-1),label=key)
+                plt.scatter(tmpdata[:,0],plotpos,s=20,c=pt_colors[pt_c].reshape(1,-1),label=key)#pt_colors[pt_c].reshape(1,-1)
             elif (len(plotpos)/len(mydata)<.5):
                 plt.scatter(tmpdata[:,0],plotpos,s=4,c=pt_colors[pt_c].reshape(1,-1),label=key)
             else:
@@ -60,7 +60,7 @@ def plots(ROI, caovar, plotstyle=1): # originally took caivar--redundant now due
         plt.ylabel("Cells (positioned)")
         plt.legend(loc="lower right",fontsize=8)
         
-    #plt.xlim([200, 300])
+    plt.xlim([0, 300])
     #plt.title("{} with [Ca_i] = {} mM, [Ca_o] = {} mM".format(ROI, caivar, caovar))
     plt.title("{} with [Ca_o] = {} mM".format(ROI, caovar))
     plt.xlabel("Time (ms)")
