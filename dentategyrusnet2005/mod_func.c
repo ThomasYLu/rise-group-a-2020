@@ -11,6 +11,7 @@ extern void _ccanl_reg();
 extern void _gskch_reg();
 extern void _hyperde3_reg();
 extern void _ichan2_reg();
+extern void _ichan2vs_reg();
 extern void _nca_reg();
 extern void _tca_reg();
 
@@ -27,6 +28,7 @@ fprintf(stderr," ccanl.mod");
 fprintf(stderr," gskch.mod");
 fprintf(stderr," hyperde3.mod");
 fprintf(stderr," ichan2.mod");
+fprintf(stderr," ichan2vs.mod");
 fprintf(stderr," nca.mod");
 fprintf(stderr," tca.mod");
 fprintf(stderr, "\n");
@@ -39,6 +41,7 @@ _ccanl_reg();
 _gskch_reg();
 _hyperde3_reg();
 _ichan2_reg();
+_ichan2vs_reg();
 _nca_reg();
 _tca_reg();
 }

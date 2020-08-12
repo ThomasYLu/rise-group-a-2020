@@ -1,0 +1,17 @@
+load_file("nrngui.hoc")
+
+objref box
+box = new VBox()
+box.intercept(1)
+xpanel("run choices")
+	xlabel("The below will typically take about 5 minutes to setup")
+	xlabel("the network and then another 20 minutes to run it")
+	xbutton("Run 10% sprouting network", "load_file(\"RI10sp.hoc\")")
+	xlabel(" ")
+	xlabel("The below quickly sets up a fast trivial test network")
+	xlabel("for checking runability or running modelview to explore cells")
+	xbutton("Test network",  "load_file(\"testnet.hoc\")")
+xpanel()
+box.intercept(0)
+box.map()
+

@@ -32,7 +32,7 @@ def plots(ROI, caovar, plotstyle=1): # originally took caivar--redundant now due
     mydata = np.loadtxt('results/'+ROI+'/spikeraster.dat')
     
     if (plotstyle==1):
-        plt.scatter(mydata[:,0],mydata[:,1],s=1, marker="1")
+        plt.scatter(mydata[:,0],mydata[:,1], s=1, marker="1")
         plt.ylabel("Cell #")
     
     else:
