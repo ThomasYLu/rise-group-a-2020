@@ -58,15 +58,22 @@ def plots(ROI, caovar, plotstyle=1): # originally took caivar--redundant now due
             pt_c += 1
             
         plt.ylabel("Cells (positioned)")
-        plt.legend(loc="upper left",fontsize=8)
+        plt.legend(loc="lower right",fontsize=8)
         
     #plt.xlim([200, 300])
     #plt.title("{} with [Ca_i] = {} mM, [Ca_o] = {} mM".format(ROI, caivar, caovar))
     plt.title("{} with [Ca_o] = {} mM".format(ROI, caovar))
     plt.xlabel("Time (ms)")
-    
+
+    if plotstyle==1:
+        plt.savefig("sty1_spikeraster_{}.png".format(ROI),dpi=200)
+    else:
+        plt.savefig("sty2_spikeraster_{}.png".format(ROI),dpi=200)
+        
     plt.show() 
-    plt.savefig("spikeraster_{}.png".format(ROI))
+    #plt.savefig("spikeraster_{}.png".format(ROI))
+    # plt.show() 
+    # plt.savefig("spikeraster_{}.png".format(ROI))
 
 def plotPostSim(ROI, plotstyle=1):
     # given ROI string, run plots for that results folder
