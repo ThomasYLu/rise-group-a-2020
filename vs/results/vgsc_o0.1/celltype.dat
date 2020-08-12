@@ -1,0 +1,6 @@
+celltype	typeIndex	rangeStart	rangeEnd
+GranuleCell	0	0	499
+BasketCell	1	500	505
+MossyCell	2	506	520
+HIPPCell	3	521	526
+PPstim	4	527	527
