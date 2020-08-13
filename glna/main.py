@@ -16,14 +16,14 @@ print("Simulation start!")
 
 # Set default values here in case not passed in via command line
 caovar = 0.5     # External calcium concentration (mM)
-caivar = caovar*5.e-6/2 # Internal calcium concentration (mM)
+caivar = caovar * 5.e-6 / 2 # Internal calcium concentration (mM)
 
 plotstyle = 1 # 1: normal spikeraster, 2: interspersed spikeraster, 0: no plots
 printstyle = 1 # 2: print a lot of status lines / updates, 1: print some lines, 0: print minimal
 
-mytstop = 30	# 1500 ms, duration of simulation
+mytstop = 100	# 1500 ms, duration of simulation
 
-simname = "sim0"
+simname = "lnatest"
 #%% Now check for command line args:
 
 print("Checking cmd args!")
@@ -92,8 +92,9 @@ if (not os.path.exists("results")):
 # check if dir exists
 # update RunName if necessary
 while (os.path.exists("results/"+h.RunName)):
-    st=h.RunName.find("_")
-    if (st>-1 and h.RunName[st+1:].isdigit()):
+    sto=h.RunName.find("_")
+    st=h.RunName[sto+1:].find("_")+sto+1 #the one after o
+    if (st>sto and h.RunName[st+1:].isdigit()):
         b='{:0'+str(len(h.RunName[st+1:]))+'d}'
         h.RunName = h.RunName[:st+1] + b.format(int(h.RunName[st+1:])+1)
     else:
@@ -103,7 +104,7 @@ while (os.path.exists("results/"+h.RunName)):
 os.mkdir("results/"+h.RunName)
 
 print("Loading hoc file now.")
-h.load_file(1,"A-DG500_M7.hoc")
+h.load_file(1,"A-lna.hoc")
 
 print("This simulation is called: " + h.RunName)
 
