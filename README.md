@@ -1,5 +1,6 @@
 # Rise 2020 - Group A Repository
-Authors: Thomas Lu, Aarohi Nadkarni, Sophia Ma, Sreeanvitha Emani, Dr. Marianne Bezaire
+Thomas Lu<sup>1,5</sup>, Aarohi Nadkarni<sup>2,5</sup>, Sophia Ma<sup>3,5</sup>, Sreeanvitha Emani<sup>4,5</sup>, Dr. Marianne Bezaire<sup>5</sup>
+Thomas Jefferson High School for Science and Technology, 6560 Braddock Rd, Alexandria, VA 22312<sup>1</sup>; Unionville High School, 750 Unionville Rd, Kennett Square, PA 19348<sup>2</sup>; Phillips Academy, 180 Main St, Andover, MA 01810<sup>3</sup>; Massachusetts Academy of Math and Science at WPI, 85 Prescott St, Worcester, MA 01605<sup>4</sup>; Boston University, Boston, MA 02215<sup>5</sup>
 
 ## Description
 This is the code repository for the project, "Decreased Calcium Concentrations Lead to Hyperexcitability in Computational Network Model of the Dentate Gyrus", conducted as part of Boston University's RISE program in the summer of 2020. Starting code is adapted from Santhakumar et al. (2005): https://senselab.med.yale.edu/ModelDB/ShowModel?model=51781#tabs-1
