@@ -1,5 +1,5 @@
 # Rise 2020 - Group A Repository
-## Authors: Thomas Lu, Aarohi Nadkarni, Sophia Ma, Sreeanvitha Emani, Dr. Marianne Bezaire
+Authors: Thomas Lu, Aarohi Nadkarni, Sophia Ma, Sreeanvitha Emani, Dr. Marianne Bezaire
 
 ## Description
 This is the code repository for the project, "Decreased Calcium Concentrations Lead to Hyperexcitability in Computational Network Model of the Dentate Gyrus", conducted as part of Boston University's RISE program in the summer of 2020. Starting code is adapted from Santhakumar et al. (2005): https://senselab.med.yale.edu/ModelDB/ShowModel?model=51781#tabs-1
